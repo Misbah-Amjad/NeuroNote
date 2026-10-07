@@ -1,0 +1,288 @@
+Below is a complete, single-file HTML solution designed to generate a professional PDF. It utilizes **Tailwind CSS** for layout, **Chart.js** for high-quality graphs, and standard HTML/CSS for tables and flowcharts.
+
+To convert this template into a PDF, open it in any modern web browser (such as Chrome, Edge, or Safari), press `Ctrl + P` (or `Cmd + P` on Mac), change the destination to **"Save as PDF"**, and make sure to check **"Background graphics"** under the print settings to ensure the flowchart colors and charts display perfectly.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Performance Report</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js for clean data rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* PDF/Print Optimized CSS overrides */
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            .page-break {
+                page-break-before: always;
+                break-before: page;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        /* Chart wrapper styling to preserve proportions in print */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Floating Print Button (Hidden during PDF export) -->
+    <div class="no-print fixed top-5 right-5 z-50">
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg cursor-pointer transition duration-150">
+            🖨️ Generate PDF
+        </button>
+    </div>
+
+    <!-- MAIN REPORT WRAPPER (A4 width optimization) -->
+    <div class="max-w-[800px] mx-auto p-8 bg-white my-6 shadow-sm border border-gray-100">
+        
+        <!-- ================= PAGE 1 ================= -->
+        <!-- Header Banner -->
+        <header class="border-b-4 border-blue-600 pb-4 mb-8 flex justify-between items-end">
+            <div>
+                <h1 class="text-3xl font-black tracking-tight text-gray-900 uppercase">Executive Performance Report</h1>
+                <p class="text-sm text-gray-500 font-medium mt-1">Enterprise Analytics Division</p>
+            </div>
+            <div class="text-right">
+                <p class="text-sm font-bold text-blue-600">CONFIDENTIAL</p>
+                <p class="text-xs text-gray-400">Date: June 2026</p>
+            </div>
+        </header>
+
+        <!-- KPI Summary Blocks -->
+        <section class="grid grid-cols-3 gap-4 mb-10">
+            <div class="bg-slate-50 p-4 border-l-4 border-emerald-500 rounded-r shadow-xs">
+                <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider block">Total Ingested Articles</span>
+                <span class="text-2xl font-bold text-gray-900">5,420</span>
+                <span class="text-xs text-emerald-600 block font-medium mt-1">↑ 12% vs last period</span>
+            </div>
+            <div class="bg-slate-50 p-4 border-l-4 border-blue-500 rounded-r shadow-xs">
+                <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider block">Avg Execution Rate</span>
+                <span class="text-2xl font-bold text-gray-900">97.5%</span>
+                <span class="text-xs text-blue-600 block font-medium mt-1">Optimal baseline achieved</span>
+            </div>
+            <div class="bg-slate-50 p-4 border-l-4 border-amber-500 rounded-r shadow-xs">
+                <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider block">System Latency</span>
+                <span class="text-2xl font-bold text-gray-900">240ms</span>
+                <span class="text-xs text-amber-600 block font-medium mt-1">Stable pipeline metrics</span>
+            </div>
+        </section>
+
+        <!-- Data Presentation Table Section -->
+        <section class="mb-10">
+            <h2 class="text-xl font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2 flex items-center gap-2">
+                <span class="w-2.5 h-5 bg-blue-600 rounded-xs inline-block"></span>
+                Module Verification Metrics
+            </h2>
+            <div class="overflow-hidden border border-gray-200 rounded-lg shadow-xs">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-slate-800">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Verification ID</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Module Engine Target</th>
+                            <th class="px-4 py-3 text-right text-xs font-bold text-white uppercase tracking-wider">Success Rate</th>
+                            <th class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200 text-sm">
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-gray-600">VT-A01</td>
+                            <td class="px-4 py-3 font-medium text-gray-900">Authentication Service Pipeline</td>
+                            <td class="px-4 py-3 text-right font-semibold text-emerald-600">100.0%</td>
+                            <td class="px-4 py-3"><span class="px-2 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 uppercase">Pass</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-gray-600">VT-A02</td>
+                            <td class="px-4 py-3 font-medium text-gray-900">User Configuration Persistence</td>
+                            <td class="px-4 py-3 text-right font-semibold text-emerald-600">98.0%</td>
+                            <td class="px-4 py-3"><span class="px-2 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 uppercase">Pass</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-gray-600">VT-A03</td>
+                            <td class="px-4 py-3 font-medium text-gray-900">Dynamic Filtering Ingestion Engine</td>
+                            <td class="px-4 py-3 text-right font-semibold text-emerald-600">96.0%</td>
+                            <td class="px-4 py-3"><span class="px-2 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 uppercase">Pass</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-mono text-gray-600">VT-A04</td>
+                            <td class="px-4 py-3 font-medium text-gray-900">Artificial Intelligence Summary Hub</td>
+                            <td class="px-4 py-3 text-right font-semibold text-amber-600">95.0%</td>
+                            <td class="px-4 py-3"><span class="px-2 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 uppercase">Pass</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Dynamic Graph Canvas -->
+        <section class="mb-6">
+            <h2 class="text-xl font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2 flex items-center gap-2">
+                <span class="w-2.5 h-5 bg-blue-600 rounded-xs inline-block"></span>
+                Quarterly Target Deviations Chart
+            </h2>
+            <div class="chart-container bg-slate-50 p-4 border border-gray-100 rounded-xl">
+                <canvas id="performanceChart" height="220"></canvas>
+            </div>
+        </section>
+
+        <!-- ================= PAGE 2 ================= -->
+        <div class="page-break"></div>
+
+        <!-- Flowchart Architecture Section -->
+        <section class="mt-8 mb-10">
+            <h2 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-2 flex items-center gap-2">
+                <span class="w-2.5 h-5 bg-blue-600 rounded-xs inline-block"></span>
+                Asynchronous Token Authentication Flow
+            </h2>
+            
+            <!-- Flowchart Structural Elements -->
+            <div class="flex flex-col items-center gap-4 py-4 bg-slate-50 border border-gray-100 rounded-xl">
+                
+                <!-- Node 1 -->
+                <div class="w-56 bg-slate-800 text-white text-xs font-bold uppercase tracking-wider py-3 px-4 rounded shadow-md text-center border-b-4 border-blue-500">
+                    1. Input User Credentials
+                </div>
+                
+                <!-- Arrow -->
+                <div class="text-gray-400 text-sm font-bold">↓</div>
+                
+                <!-- Node 2 -->
+                <div class="w-56 bg-blue-600 text-white text-xs font-bold uppercase tracking-wider py-3 px-4 rounded shadow-md text-center">
+                    2. Fire Auth Service Method
+                </div>
+                
+                <!-- Arrow -->
+                <div class="text-gray-400 text-sm font-bold">↓</div>
+                
+                <!-- Condition Decision Block -->
+                <div class="relative flex items-center justify-center p-4">
+                    <div class="w-32 h-32 bg-amber-500 text-white text-xs font-extrabold uppercase tracking-wider flex items-center justify-center text-center rotate-45 rounded shadow-md border-2 border-amber-600">
+                        <span class="-rotate-45 block px-2">3. Server Response Code?</span>
+                    </div>
+                    
+                    <!-- Branch Fail -->
+                    <div class="absolute right-[-100px] top-1/2 -translate-y-1/2 flex items-center">
+                        <span class="text-xs font-bold text-red-500 mr-1">401 Error</span>
+                        <div class="w-12 h-0.5 bg-red-400"></div>
+                        <div class="w-28 bg-red-100 text-red-800 border border-red-200 text-[10px] font-bold p-2 rounded shadow-xs uppercase ml-1">
+                            Trigger App Error Interface
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Arrow (Success Route) -->
+                <div class="text-gray-400 text-sm font-bold mt-2">↓ <span class="text-xs font-bold text-emerald-600 ml-1">200 OK</span></div>
+                
+                <!-- Node 4 -->
+                <div class="w-56 bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider py-3 px-4 rounded shadow-md text-center">
+                    4. Decompress JSON Web Token (JWT)
+                </div>
+                
+                <!-- Arrow -->
+                <div class="text-gray-400 text-sm font-bold">↓</div>
+                
+                <!-- Node 5 -->
+                <div class="w-56 bg-slate-800 text-white text-xs font-bold uppercase tracking-wider py-3 px-4 rounded shadow-md text-center border-t-4 border-emerald-500">
+                    5. Hydrate Application State
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Summary Footer Notes -->
+        <section class="bg-blue-50 border border-blue-100 p-4 rounded-lg">
+            <h4 class="text-sm font-bold text-blue-900 uppercase tracking-wide mb-1">Analytical Overview Note</h4>
+            <p class="text-xs text-blue-800 leading-relaxed">
+                The structured testing logs support the structural performance configurations defined within the baseline estimates. System latency scales safely within normal threshold specifications, confirming the integration limits of the modular state engine architecture.
+            </p>
+        </section>
+
+        <!-- Report Footer -->
+        <footer class="mt-12 pt-4 border-t border-gray-100 text-center text-xs text-gray-400 flex justify-between">
+            <p>© 2026 Enterprise Systems Inc.</p>
+            <p>Page 2 of 2</p>
+        </footer>
+
+    </div>
+
+    <!-- Script Configuration to Render Charts Before PDF Export -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sloc Overrun', 'Schedule Margin', 'Effort Delta', 'Pass Rate Shift'],
+                    datasets: [{
+                        label: 'Estimated Performance Index',
+                        data: [100, 100, 100, 95],
+                        backgroundColor: '#e2e8f0', // Slate 200
+                        borderColor: '#94a3b8',
+                        borderWidth: 1,
+                        barThickness: 24,
+                    }, {
+                        label: 'Actual Operational Performance',
+                        data: [106.2, 84.6, 78.7, 97.5],
+                        backgroundColor: '#2563eb', // Blue 600
+                        borderColor: '#1d4ed8',
+                        borderWidth: 1,
+                        barThickness: 24,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    animation: {
+                        duration: 0 // Disable animations so it loads instantly for the PDF engine
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                font: { size: 11, weight: '500' },
+                                color: '#475569'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 120,
+                            ticks: {
+                                font: { size: 10 },
+                                color: '#94a3b8'
+                            },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 11, weight: '500' },
+                                color: '#475569'
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+```
